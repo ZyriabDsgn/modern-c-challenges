@@ -23,8 +23,7 @@ void printArray(const int array[static 1], const size_t size, const char* msg) {
 // Simple test function
 bool isArraySorted(const int array[static 1], const size_t size) {
     // Finishing before the last element prevents undefined behavior
-    // We can start at 0 because size_t is unsigned and thus cannot be negative
-    for (size_t i = 0; i < size - 1; i++) {
+    for (size_t i = 1; i < size - 1; i++) {
         if (array[i - 1] > array[i] || array[i + 1] < array[i]) {
             return false;
         }
@@ -33,10 +32,10 @@ bool isArraySorted(const int array[static 1], const size_t size) {
     return true;
 }
 
-// Returns both arrays as one merged array
+// Returns both arrays as one merged (and sorted) array
 int* mergeArrays(const int a[static 1], const int b[static 1],
                  const size_t aSize, const size_t bSize) {
-    size_t bufferSize = aSize + bSize;
+    const size_t bufferSize = aSize + bSize;
     int* buffer = malloc(bufferSize * sizeof(int));
 
     // Each array has its own index variable
@@ -65,39 +64,32 @@ int* mergeSort(int array[static 1], const size_t arraySize) {
     // If the given array size is odd,
     // we will add the remaining element to the second one
     // e.g.: [1,2,3,4,5] -> [1,2] [3,4,5]
-    bool isArraySizeOdd = arraySize % 2 == 1;
-    size_t firstArraySize = arraySize / 2;
-    size_t secondArraySize = firstArraySize + (isArraySizeOdd ? 1 : 0);
-
-    int* firstArray = malloc(firstArraySize * sizeof(int));
-    int* secondArray = malloc(secondArraySize * sizeof(int));
-
-    // Copies the first half of the array
-    memcpy(firstArray, array, firstArraySize * sizeof(int));
-    // Copies the second half of the array
-    memcpy(secondArray, array + firstArraySize, secondArraySize * sizeof(int));
+    const bool isArraySizeOdd = arraySize % 2 == 1;
+    const size_t firstArrayHalf = arraySize / 2;
+    const size_t secondArrayHalf = firstArrayHalf + (isArraySizeOdd ? 1 : 0);
 
     // The recursive calls to mergeSort will divide the given array until it is
     // made of one element, after that it will loop back to the mergeArrays
     // function that will actually sort each elements
-    int* finalResult = mergeArrays(mergeSort(firstArray, firstArraySize),
-                                   mergeSort(secondArray, secondArraySize),
-                                   firstArraySize, secondArraySize);
-
-    free(firstArray);
-    free(secondArray);
+    // passing the full `array` with `firstArrayHalf` will just process the
+    // first half of `array` `array + firstArrayHalf` is basic pointer
+    // arithmetics that skip the first half of `array`
+    int* finalResult =
+        mergeArrays(mergeSort(array, firstArrayHalf),
+                    mergeSort(array + firstArrayHalf, secondArrayHalf),
+                    firstArrayHalf, secondArrayHalf);
 
     return finalResult;
 }
 
 int main(void) {
-    int arr[ARRAY_LENGTH] = {5, 1, 6, 13, 742, 2, 6, 7, 1, 3};
+    int arr[ARRAY_LENGTH] = {5, 1, -6, 13, 742, 2, 6, 7, 1, 3};
 
     int* sorted = mergeSort(arr, ARRAY_LENGTH);
 
-    // printArray(arr, 10, "before sorting");
+    // printArray(arr, ARRAY_LENGTH, "before sorting");
     // puts("-----------------------");
-    // printArray(sorted, length, "after sorting");
+    // printArray(sorted, ARRAY_LENGTH, "after sorting");
 
     printf("Is original sorted?: %d\n", isArraySorted(arr, ARRAY_LENGTH));
     printf("Is final sorted?: %d\n", isArraySorted(sorted, ARRAY_LENGTH));
