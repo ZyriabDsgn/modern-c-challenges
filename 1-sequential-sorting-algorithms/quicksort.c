@@ -18,15 +18,15 @@
 #define ARRAY_LENGTH 10
 
 // Basic utility function for debugging purposes
-void printArray(const double array[static 1], const size_t arraySize,
-                const char* msg) {
+void printArray(double const array[static 1], size_t const arraySize,
+                char const msg[static 1]) {
     for (size_t i = 0; i < arraySize; i++) {
         printf("%s[%zu]: %g\n ", msg, i, array[i]);
     }
 }
 
 // Simple test function
-bool isArraySorted(const double array[static 1], const size_t arraySize) {
+bool isArraySorted(double const array[static 1], size_t const arraySize) {
     if (arraySize <= 1) {
         return true;
     }
@@ -40,22 +40,23 @@ bool isArraySorted(const double array[static 1], const size_t arraySize) {
     return true;
 }
 
-void swapArrayElements(double array[static 2], size_t firstIndex,
-                       size_t secondIndex) {
+// Imperatively swaps two elements in the given array
+void swapArrayElements(double array[static 2], size_t const firstIndex,
+                       size_t const secondIndex) {
     double buffer = array[firstIndex];
     array[firstIndex] = array[secondIndex];
     array[secondIndex] = buffer;
 }
 
 // Iterates over the elements of `array`, from `first` to `last`
-void z_qsort(double array[static 1], const size_t first, const size_t last) {
+void z_qsort(double array[static 1], size_t const first, size_t const last) {
     if (first >= last) {
         return;
     }
 
     size_t left = first;
     size_t right = last;
-    const size_t pivotIndex = last;
+    size_t const pivotIndex = last;
 
     // Divide & conquer
     // We create "virtual" partitions by increasing/decreasing 2 indices
