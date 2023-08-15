@@ -101,8 +101,8 @@ void z_qsort(double array[static 1], size_t const first, size_t const last) {
 }
 
 int main(void) {
-    double arr[ARRAY_LENGTH] = {4.f,   6.f,  10.5f, 1.1f,  0.f,
-                                845.f, 13.f, 10.f,  -14.f, 160.f};
+    double arr[ARRAY_LENGTH] = {4.0,   6.0,  10.5, 1.1,   0.0,
+                                845.0, 13.0, 10.0, -14.0, 160.0};
 
     z_qsort(arr, 0, ARRAY_LENGTH - 1);
 
