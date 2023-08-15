@@ -1,4 +1,6 @@
 // Some googling to find the right way to handle this and here we are
+// usage: compile the source, then call it like so `./pi <number>`
+// e.g.: ./pi 42 <- will give you 3.(...42 digits)
 
 #include <math.h>
 #include <stdio.h>
@@ -22,7 +24,7 @@ int main(int argc, char* argv[argc + 1]) {
     char foo[7];
     sprintf(foo, "%%.%dg", n + 1);
 
-    // The `%.14g` is now replaced by 3.(`14 digits`)
+    // The `%.14g` is now replaced by 3.(...14 digits)
     // It's like doing `printf("%.14g", M_PI);` except that it works
     char bar[51];
     sprintf(bar, foo, M_PI);
