@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Will compile and launch the program
+
 # Usage:
 # First time, do: `chmod +x compile.sh`
 # Then just do: `./compile.sh YOUR_FILE_NAME YOUR_ARGUMENT_IF_ANY`
