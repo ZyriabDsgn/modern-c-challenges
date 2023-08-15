@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Usage:
-# First time, do: `chmod +x compile`
-# Then just do: `./compile YOUR_FILE_NAME YOUR_ARGUMENT_IF_ANY`
+# First time, do: `chmod +x compile.sh`
+# Then just do: `./compile.sh YOUR_FILE_NAME YOUR_ARGUMENT_IF_ANY`
 # You can use the file name with and without the extension
 
 NAME_WITHOUT_EXT="${1%.*}"
